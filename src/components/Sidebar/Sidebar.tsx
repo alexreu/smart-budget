@@ -1,9 +1,9 @@
 "use client";
 
+import { Logo } from "../Logo";
 import {
     Sidebar as ShadcnSidebar,
     SidebarContent,
-    SidebarFooter,
     SidebarGroup,
     SidebarGroupContent,
     SidebarHeader,
@@ -12,11 +12,10 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from "@/components/ui/sidebar";
-import { UserButton, useUser } from "@clerk/nextjs";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChartPie, CreditCard, HandCoins, Home } from "lucide-react";
+import { ChartPie, CreditCard, HandCoins, Home, Settings } from "lucide-react";
 import Link from "next/link";
-import { Logo } from "../Logo";
+import { usePathname } from "next/navigation";
 
 const sidebarItems = [
     {
@@ -39,14 +38,16 @@ const sidebarItems = [
         url: "/budget",
         icon: <ChartPie />,
     },
+    {
+        title: "Settings",
+        url: "/settings",
+        icon: <Settings />,
+    },
 ];
 
 export const Sidebar = () => {
     const { open } = useSidebar();
-
-    const { user } = useUser();
-
-    console.log({ user });
+    const pathname = usePathname();
 
     return (
         <ShadcnSidebar collapsible="icon">
@@ -84,7 +85,10 @@ export const Sidebar = () => {
                         <SidebarMenu>
                             {sidebarItems.map(({ url, icon, title }) => (
                                 <SidebarMenuItem key={url}>
-                                    <SidebarMenuButton asChild>
+                                    <SidebarMenuButton
+                                        isActive={pathname === url}
+                                        asChild
+                                    >
                                         <Link href={url}>
                                             {icon}
                                             <span>{title}</span>
@@ -96,9 +100,6 @@ export const Sidebar = () => {
                     </SidebarGroupContent>
                 </SidebarGroup>
             </SidebarContent>
-            <SidebarFooter>
-                <UserButton />
-            </SidebarFooter>
         </ShadcnSidebar>
     );
 };

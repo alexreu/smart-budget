@@ -1,5 +1,6 @@
+import { Appbar } from "@/components/Appbar";
 import { Sidebar } from "@/components/Sidebar";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default function DashboardLayout({
     children,
@@ -9,9 +10,9 @@ export default function DashboardLayout({
     return (
         <SidebarProvider>
             <Sidebar />
-            <main className="relative flex h-screen w-full flex-col p-8">
-                <SidebarTrigger />
-                <div className="w-full">{children}</div>
+            <main className="relative flex h-screen w-full flex-col">
+                <Appbar />
+                <div className="w-full p-8">{children}</div>
             </main>
         </SidebarProvider>
     );
