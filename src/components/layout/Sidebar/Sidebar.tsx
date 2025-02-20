@@ -1,6 +1,6 @@
 "use client";
 
-import { Logo } from "../Logo";
+import { Logo } from "@/components/Logo";
 import {
     Sidebar as ShadcnSidebar,
     SidebarContent,

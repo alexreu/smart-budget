@@ -14,6 +14,7 @@ import {
     TypographyH2,
     TypographyH3,
 } from "@/components/ui/typography";
+import { Route } from "@/enum/route";
 import { currentUser } from "@clerk/nextjs/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -22,15 +23,15 @@ export default async function WizardPage() {
     const user = await currentUser();
 
     if (!user) {
-        redirect("/sign-in");
+        redirect(Route.SignIn);
     }
     return (
         <div className="container flex flex-col max-w-2xl items-center justify-between gap-4">
             <div className="text-center">
-                <TypographyH1>
+                <TypographyH1 className="text-3xl">
                     Welcome,{" "}
                     <span className="ml-2 font-bold text-primary">
-                        {user.firstName}! 👋🏻
+                        {user.firstName} ! 👋🏻
                     </span>
                 </TypographyH1>
                 <TypographyH2 className="mt-4 text-muted-foreground">

@@ -1,5 +1,5 @@
-import { Appbar } from "@/components/Appbar";
-import { Sidebar } from "@/components/Sidebar";
+import { Appbar } from "@/components/layout/Appbar";
+import { Sidebar } from "@/components/layout/Sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default function DashboardLayout({
