@@ -1,4 +1,4 @@
-import { CheckUserSettingsAction } from "../wizard/_actions/userSettings";
+import { CheckUserSettingsAction } from "@/actions/user-settings";
 import { Appbar } from "@/components/layout/Appbar";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";

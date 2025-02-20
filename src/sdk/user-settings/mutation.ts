@@ -1,4 +1,4 @@
-import { UpdateUserSettingsAction } from "@/app/wizard/_actions/userSettings";
+import { UpdateUserSettingsAction } from "@/actions/user-settings";
 import { UserSettings } from "@prisma/client";
 import { UseMutationOptions, useMutation } from "@tanstack/react-query";
 

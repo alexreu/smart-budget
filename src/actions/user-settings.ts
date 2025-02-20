@@ -2,9 +2,21 @@
 
 import { Route } from "@/enum/route";
 import prisma from "@/lib/prisma";
-import { UserSettingsSchema } from "@/schema/userSettings";
+import { UserSettingsSchema } from "@/schemas/userSettings";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+
+export async function GetUserSettingsAction() {
+    const user = await currentUser();
+
+    const userSettings = await prisma.userSettings.findUnique({
+        where: {
+            userId: user?.id,
+        },
+    });
+
+    return userSettings;
+}
 
 export async function UpdateUserSettingsAction(currency: string) {
     const parsedBody = UserSettingsSchema.safeParse({ currency });
