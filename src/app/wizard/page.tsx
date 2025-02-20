@@ -50,12 +50,14 @@ export default async function WizardPage() {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <CurrencyComboBox className="w-full" />
+                    <CurrencyComboBox />
                 </CardContent>
             </Card>
             <Separator />
             <Button className="w-full" asChild>
-                <Link href="/dashboard">I&apos;m ready to get started ✅</Link>
+                <Link href={Route.Dashboard}>
+                    I&apos;m ready to get started ✅
+                </Link>
             </Button>
             <div className="mt-8">
                 <Logo />
