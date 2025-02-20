@@ -6,7 +6,7 @@ import { UserSettingsSchema } from "@/schema/userSettings";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
-export async function UpdateUserCurrency(currency: string) {
+export async function UpdateUserSettingsAction(currency: string) {
     const parsedBody = UserSettingsSchema.safeParse({ currency });
 
     if (!parsedBody.success) {
@@ -29,4 +29,23 @@ export async function UpdateUserCurrency(currency: string) {
     });
 
     return userSettings;
+}
+
+export async function CheckUserSettingsAction() {
+    const user = await currentUser();
+
+    if (!user) {
+        redirect(Route.SignIn);
+    }
+
+    const userSettings = await prisma.userSettings.findUnique({
+        where: {
+            userId: user.id,
+        },
+        select: {
+            id: true,
+        },
+    });
+
+    return !!userSettings;
 }

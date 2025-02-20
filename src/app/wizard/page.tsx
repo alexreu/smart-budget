@@ -1,3 +1,4 @@
+import { CheckUserSettingsAction } from "./_actions/userSettings";
 import { CurrencyComboBox } from "@/components/CurrencyComboBox";
 import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/button";
@@ -20,11 +21,19 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function WizardPage() {
-    const user = await currentUser();
+    const [user, hasSettings] = await Promise.all([
+        currentUser(),
+        CheckUserSettingsAction(),
+    ]);
 
     if (!user) {
         redirect(Route.SignIn);
     }
+
+    if (hasSettings) {
+        redirect(Route.Dashboard);
+    }
+
     return (
         <div className="container flex flex-col max-w-2xl items-center justify-between gap-4">
             <div className="text-center">
