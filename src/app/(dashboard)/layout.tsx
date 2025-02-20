@@ -3,6 +3,7 @@ import { Appbar } from "@/components/layout/Appbar";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Route } from "@/enum/route";
+import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
 export default async function DashboardLayout({
@@ -10,7 +11,14 @@ export default async function DashboardLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const hasSettings = await CheckUserSettingsAction();
+    const [user, hasSettings] = await Promise.all([
+        currentUser(),
+        CheckUserSettingsAction(),
+    ]);
+
+    if (!user) {
+        redirect(Route.SignIn);
+    }
 
     if (!hasSettings) {
         redirect(Route.Wizard);

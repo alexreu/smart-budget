@@ -1,4 +1,3 @@
-import { CheckUserSettingsAction } from "./_actions/userSettings";
 import { CurrencyComboBox } from "@/components/CurrencyComboBox";
 import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/button";
@@ -18,21 +17,9 @@ import {
 import { Route } from "@/enum/route";
 import { currentUser } from "@clerk/nextjs/server";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
 export default async function WizardPage() {
-    const [user, hasSettings] = await Promise.all([
-        currentUser(),
-        CheckUserSettingsAction(),
-    ]);
-
-    if (!user) {
-        redirect(Route.SignIn);
-    }
-
-    if (hasSettings) {
-        redirect(Route.Dashboard);
-    }
+    const user = await currentUser();
 
     return (
         <div className="container flex flex-col max-w-2xl items-center justify-between gap-4">
@@ -40,7 +27,7 @@ export default async function WizardPage() {
                 <TypographyH1 className="text-3xl">
                     Welcome,{" "}
                     <span className="ml-2 font-bold text-primary">
-                        {user.firstName} ! 👋🏻
+                        {user?.firstName} ! 👋🏻
                     </span>
                 </TypographyH1>
                 <TypographyH2 className="mt-4 text-muted-foreground">
