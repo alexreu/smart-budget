@@ -86,7 +86,6 @@ export function TypographyP({
     return (
         <p className={cn("leading-7 [&:not(:first-child)]:mt-6", className)}>
             {children}
-            his ways and repealed the joke tax.
         </p>
     );
 }
