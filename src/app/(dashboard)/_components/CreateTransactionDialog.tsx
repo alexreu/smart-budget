@@ -90,7 +90,7 @@ export const CreateTransactionDialog = ({
             });
 
             queryClient.invalidateQueries({
-                queryKey: ["user-balance"],
+                queryKey: ["overview"],
             });
             setOpen(false);
         },

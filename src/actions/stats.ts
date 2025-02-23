@@ -7,6 +7,10 @@ import { TransactionTypeEnum } from "@/sdk/transactions";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
+export type GetUserBalanceActionType = Awaited<
+    ReturnType<typeof GetUserBalanceAction>
+>;
+
 export async function GetUserBalanceAction({ from, to }: OverviewSchemaType) {
     const parsedBody = overviewSchema.safeParse({ from, to });
 
@@ -44,6 +48,10 @@ export async function GetUserBalanceAction({ from, to }: OverviewSchemaType) {
     };
 }
 
+export type GetUserCategoriesStatsActionType = Awaited<
+    ReturnType<typeof GetUserCategoriesStatsAction>
+>;
+
 export async function GetUserCategoriesStatsAction({
     from,
     to,
@@ -59,4 +67,39 @@ export async function GetUserCategoriesStatsAction({
     if (!user) {
         redirect(Route.SignIn);
     }
+
+    const categoriesStats = await prisma.transaction.groupBy({
+        by: ["categoryId", "type"],
+        where: {
+            userId: user.id,
+            date: { gte: from, lte: to },
+        },
+        _sum: {
+            amount: true,
+        },
+        orderBy: {
+            _sum: {
+                amount: "desc",
+            },
+        },
+    });
+
+    const categories = await prisma.category.findMany({
+        where: {
+            id: { in: categoriesStats.map((item) => item.categoryId) },
+        },
+    });
+
+    const categoriesStatsWithInfo = categoriesStats.map((item) => {
+        const category = categories.find(
+            (category) => category.id === item.categoryId,
+        );
+        return {
+            ...item,
+            name: category?.name,
+            icon: category?.icon,
+        };
+    });
+
+    return categoriesStatsWithInfo;
 }
