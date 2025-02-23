@@ -14,9 +14,10 @@ datasource db {
 }
 
 model UserSettings {
-  id       String @id @default(uuid())
-  currency String
-  userId   String @unique
+  id          String @id @default(uuid())
+  currency    String
+  userBalance Float  @default(0)
+  userId      String @unique
 }
 
 model Category {

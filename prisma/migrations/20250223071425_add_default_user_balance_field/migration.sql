@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "UserSettings" ADD COLUMN     "userBalance" DOUBLE PRECISION NOT NULL DEFAULT 0;

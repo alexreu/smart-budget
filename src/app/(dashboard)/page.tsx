@@ -1,13 +1,17 @@
+"use client";
+
 import { CreateTransactionDialog } from "./_components/CreateTransactionDialog";
 import { Overview } from "./_components/Overview";
 import { Button } from "@/components/ui/button";
 import { TypographyH1, TypographyMuted } from "@/components/ui/typography";
 import { TransactionTypeEnum } from "@/sdk/transactions";
-import { currentUser } from "@clerk/nextjs/server";
+import { useUserSettings } from "@/sdk/user-settings/queries";
+import { useUser } from "@clerk/nextjs";
 import { Minus, Plus } from "lucide-react";
 
-export default async function DashboardPage() {
-    const user = await currentUser();
+export default function DashboardPage() {
+    const { user } = useUser();
+    const { data: settings } = useUserSettings();
 
     return (
         <div className="h-full flex flex-col gap-16">
@@ -43,7 +47,7 @@ export default async function DashboardPage() {
                     />
                 </div>
             </div>
-            <Overview userSettings={{}} />
+            {settings && <Overview userSettings={settings} />}
         </div>
     );
 }

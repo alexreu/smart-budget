@@ -11,4 +11,7 @@ export const UserSettingsSchema = z.object({
 
         return value;
     }),
+    userBalance: z.coerce.number(),
 });
+
+export type UserSettingsType = z.infer<typeof UserSettingsSchema>;
