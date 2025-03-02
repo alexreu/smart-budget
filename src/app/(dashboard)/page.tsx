@@ -1,6 +1,7 @@
 "use client";
 
 import { CreateTransactionDialog } from "./_components/CreateTransactionDialog";
+import { History } from "./_components/History";
 import { Overview } from "./_components/Overview";
 import { Button } from "@/components/ui/button";
 import { TypographyH1, TypographyMuted } from "@/components/ui/typography";
@@ -47,7 +48,12 @@ export default function DashboardPage() {
                     />
                 </div>
             </div>
-            {settings && <Overview userSettings={settings} />}
+            {settings && (
+                <>
+                    <Overview userSettings={settings} />
+                    <History userSettings={settings} />
+                </>
+            )}
         </div>
     );
 }
