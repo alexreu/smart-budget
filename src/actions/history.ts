@@ -149,6 +149,7 @@ async function GetMonthHistoryDataAction({
         where: {
             userId,
             year,
+            month,
         },
         _sum: {
             expense: true,
@@ -158,6 +159,8 @@ async function GetMonthHistoryDataAction({
             day: "asc",
         },
     });
+
+    console.log({ results, year, month });
 
     if (results.length === 0 || !results) return [];
 
@@ -183,4 +186,6 @@ async function GetMonthHistoryDataAction({
             income: dayData.income,
         });
     }
+
+    return historyData;
 }

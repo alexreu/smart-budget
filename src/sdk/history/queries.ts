@@ -27,7 +27,7 @@ export function useHistoryData({
     month: number;
 }) {
     return useQuery<GetHistoryDataActionType>({
-        queryKey: ["overview", "history", "data"],
+        queryKey: ["overview", "history", "data", timeframe, year, month],
         queryFn: async () => {
             const data = await GetHistoryDataAction({
                 timeframe,
