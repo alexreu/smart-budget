@@ -175,7 +175,7 @@ async function GetMonthHistoryDataAction({
         });
     });
 
-    for (let i = 0; i < daysInMonth; i++) {
+    for (let i = 1; i <= daysInMonth; i++) {
         const dayData = dayMap.get(i) || { expense: 0, income: 0 };
 
         historyData.push({

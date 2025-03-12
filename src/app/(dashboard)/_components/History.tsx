@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { Period, Timeframe } from "@/sdk/history";
 import { useHistoryData } from "@/sdk/history/queries";
 import { UserSettings } from "@prisma/client";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import CountUp from "react-countup";
 import {
     Bar,
@@ -43,8 +43,6 @@ export const History = ({ userSettings }: HistoryProps) => {
         });
 
     const isDataHistoryAvailable = historyData && historyData.length > 0;
-
-    console.log(historyData);
 
     return (
         <div>
@@ -238,8 +236,8 @@ const CustomTooltip = ({ active, payload, formatter }: any) => {
                 formatter={formatter}
                 label="Balance"
                 value={income - expense}
-                bgColor="bg-secondary"
-                textColor="text-secondary"
+                bgColor="bg-muted-foreground"
+                textColor="text-muted-foreground"
             />
         </div>
     );
@@ -258,6 +256,11 @@ const TooltipRow = ({
     bgColor: string;
     textColor: string;
 }) => {
+    const formattingFn = useCallback(
+        (value: number) => formatter.format(value),
+        [formatter],
+    );
+
     return (
         <div className="flex items-center justify-between gap-2">
             <div className={cn("h-4 w-4 rounded-full", bgColor)} />
@@ -271,7 +274,7 @@ const TooltipRow = ({
                         duration={0.5}
                         end={value}
                         decimals={0}
-                        formattingFn={(value) => formatter.format(value)}
+                        formattingFn={formattingFn}
                         className="text-sm"
                     />
                 </div>
